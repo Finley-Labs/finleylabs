@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Sitemap URL will be appended during build relative to host
-Sitemap: https://finley-labs.github.io/finleylabs/sitemap-index.xml
+Sitemap: https://finleylabs.cc/sitemap-index.xml
