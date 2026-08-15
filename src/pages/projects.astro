@@ -1,0 +1,335 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { ArrowRight, Compass } from '@lucide/astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.map(project => ({
+  title: project.data.title,
+  category: project.data.category,
+  categoryLabel: project.data.categoryLabel,
+  description: project.data.description,
+  tech: project.data.technologies,
+  status: project.data.status,
+  href: `${base}projects`
+}));
+
+const filters = [
+  { id: 'all', label: 'All Projects' },
+  { id: 'ai', label: 'AI & Intelligent' },
+  { id: 'data', label: 'Data & Infra' },
+  { id: 'software', label: 'Software & Apps' }
+];
+---
+
+<BaseLayout
+  title="Projects — Finley Labs"
+  description="Explore the technical systems, products, and software platforms developed by Finley Labs for real-world impact."
+>
+  <!-- Projects Hero -->
+  <section class="projects-hero section-padding">
+    <div class="container text-center">
+      <h1 class="hero-title">Built for the <span class="gradient-text">real world.</span></h1>
+      <p class="hero-desc">
+        A selection of digital products, data platforms, and intelligence pipelines developed and maintained by Finley Labs.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter & Grid Section -->
+  <section class="projects-grid-section" aria-label="Projects showcase">
+    <div class="container">
+      <!-- Interactive Filter Tabs -->
+      <div class="filter-tabs-wrapper">
+        <div class="filter-tabs" role="tablist">
+          {filters.map(filter => (
+            <button
+              class={`filter-tab ${filter.id === 'all' ? 'active' : ''}`}
+              role="tab"
+              aria-selected={filter.id === 'all' ? 'true' : 'false'}
+              data-filter={filter.id}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="projects-grid">
+        {projects.map(project => (
+          <article class="project-card" data-category={project.category}>
+            <div class="project-header">
+              <span class="project-category">{project.categoryLabel}</span>
+              <span class="project-status">{project.status}</span>
+            </div>
+            <h2 class="project-title">{project.title}</h2>
+            <p class="project-desc">{project.description}</p>
+            <div class="project-tech">
+              {project.tech.map(tag => (
+                <span class="tech-tag">{tag}</span>
+              ))}
+            </div>
+            <div class="card-footer">
+              <!-- Placeholder project mark -->
+              <span class="placeholder-label">[ PROJECT PLACEHOLDER ]</span>
+              <a href={project.href} class="project-link">
+                View Spec <ArrowRight size={16} />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA section -->
+  <section class="projects-cta section-padding">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 class="cta-title">Have a project in mind?</h2>
+        <p class="cta-sub">Let's discuss how we can turn your business requirements into real-world working software.</p>
+        <Button href={`${base}contact`} variant="primary">Start a Project <ArrowRight size={18} /></Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .projects-hero {
+    background-color: var(--color-black);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+  }
+
+  .hero-desc {
+    max-width: 660px;
+    margin: 0 auto;
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+  }
+
+  /* Filter Tabs */
+  .filter-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 48px;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 8px;
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    padding: 6px;
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+
+  .filter-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-tab {
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    padding: 8px 18px;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--transition-fast), color var(--transition-fast);
+  }
+
+  .filter-tab:hover {
+    color: var(--color-white);
+  }
+
+  .filter-tab.active {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* Grid and cards */
+  .projects-grid-section {
+    padding-bottom: clamp(60px, 10vw, 120px);
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .project-card {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: clamp(28px, 4vw, 36px);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-normal), border-color var(--transition-normal), opacity var(--transition-normal);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .project-category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-blue);
+  }
+
+  .project-status {
+    font-size: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: 100px;
+    color: var(--color-text-secondary);
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    flex-grow: 1;
+    line-height: 1.6;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .tech-tag {
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 20px;
+  }
+
+  .placeholder-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-headings);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--color-white);
+    font-size: 0.9rem;
+  }
+
+  .project-link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .project-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(40px, 6vw, 80px) 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-sub {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+</style>
+
+<script>
+  // Simple client-side filter logic
+  const tabs = document.querySelectorAll('.filter-tab');
+  const cards = document.querySelectorAll('.project-card');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Toggle active classes on tabs
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      const filterValue = tab.getAttribute('data-filter');
+
+      cards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        
+        if (filterValue === 'all' || category === filterValue) {
+          (card as HTMLElement).style.display = 'flex';
+          setTimeout(() => {
+            (card as HTMLElement).style.opacity = '1';
+            (card as HTMLElement).style.transform = 'translateY(0)';
+          }, 10);
+        } else {
+          (card as HTMLElement).style.opacity = '0';
+          (card as HTMLElement).style.transform = 'translateY(10px)';
+          setTimeout(() => {
+            (card as HTMLElement).style.display = 'none';
+          }, 200);
+        }
+      });
+    });
+  });
+</script>

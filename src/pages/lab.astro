@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { ArrowRight, Terminal } from '@lucide/astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const allLab = await getCollection('lab');
+const experiments = allLab.map(item => ({
+  id: item.data.id,
+  category: item.data.category,
+  title: item.data.title,
+  status: item.data.status,
+  date: item.data.date,
+  description: item.data.description,
+  tech: item.data.tech,
+  href: `${base}lab`
+}));
+---
+
+<BaseLayout
+  title="The Lab — Finley Labs"
+  description="Explore active technology research, hardware/software prototypes, and experimental software systems at Finley Labs."
+>
+  <!-- Lab Hero -->
+  <section class="lab-hero section-padding">
+    <div class="container text-center">
+      <div class="lab-badge">
+        <Terminal size={14} />
+        <span>ACTIVE EXPERIMENTS DECK</span>
+      </div>
+      <h1 class="hero-title">Ideas under construction. <br /><span class="gradient-text-violet">Emerging technology.</span></h1>
+      <p class="hero-desc">
+        The Lab is where we test theories, build quick prototypes, and explore emerging technologies to evaluate their real-world readiness.
+      </p>
+    </div>
+  </section>
+
+  <!-- Lab grid -->
+  <section class="lab-grid-section" aria-label="Lab experiments listing">
+    <div class="container">
+      <div class="lab-grid">
+        {experiments.map(exp => (
+          <div class="lab-card-detail">
+            <div class="card-header">
+              <span class="exp-id">{exp.id}</span>
+              <span class="exp-category">{exp.category}</span>
+            </div>
+            
+            <h2 class="exp-title">{exp.title}</h2>
+            <div class="exp-meta">
+              <span class="status-badge">{exp.status}</span>
+              <span class="exp-date">{exp.date}</span>
+            </div>
+            
+            <p class="exp-desc">{exp.description}</p>
+            
+            <div class="exp-tech-row">
+              {exp.tech.map(tag => (
+                <span class="tech-tag">{tag}</span>
+              ))}
+            </div>
+
+            <div class="card-footer">
+              <span class="placeholder-label">[ LAB PLACEHOLDER ]</span>
+              <a href={exp.href} class="exp-link">
+                Explore Experiment <ArrowRight size={16} />
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing info statement -->
+  <section class="lab-philosophy section-padding">
+    <div class="container">
+      <div class="philosophy-box">
+        <h2 class="philosophy-title">Why do we run experiments?</h2>
+        <p class="philosophy-text">
+          By testing new architectural patterns and experimental software libraries early in a sandboxed lab environment, we avoid exposing our client production systems to unvalidated operational risks. When a technology proves stable in the lab, we graduate it to our core capability stack.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .lab-hero {
+    background-color: var(--color-black);
+    position: relative;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .lab-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.8rem;
+    font-family: var(--font-headings);
+    font-weight: 600;
+    color: var(--color-violet);
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+  }
+
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #7C3AED 0%, #2563FF 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-desc {
+    max-width: 660px;
+    margin: 0 auto;
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+  }
+
+  /* Grid and Cards */
+  .lab-grid-section {
+    padding-bottom: clamp(60px, 10vw, 120px);
+  }
+
+  .lab-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .lab-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .lab-card-detail {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: clamp(28px, 4vw, 36px);
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .lab-card-detail:hover {
+    transform: translateY(-4px);
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .exp-id {
+    color: var(--color-violet);
+    font-family: var(--font-headings);
+  }
+
+  .exp-category {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .exp-title {
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+
+  .exp-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .status-badge {
+    font-size: 0.75rem;
+    background-color: rgba(124, 58, 237, 0.06);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    padding: 2px 10px;
+    border-radius: 100px;
+    color: var(--color-violet);
+    font-weight: 500;
+  }
+
+  .exp-date {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+  }
+
+  .exp-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    flex-grow: 1;
+    line-height: 1.6;
+  }
+
+  .exp-tech-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .tech-tag {
+    font-size: 0.78rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    padding-top: 20px;
+  }
+
+  .placeholder-label {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-headings);
+  }
+
+  .exp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--color-white);
+    font-size: 0.9rem;
+  }
+
+  .exp-link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .exp-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Philosophy box */
+  .philosophy-box {
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(32px, 6vw, 60px);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .philosophy-title {
+    margin-bottom: 16px;
+  }
+
+  .philosophy-text {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  /* Colors */
+  --color-black: #0B0F19;
+  --color-navy: #0F172A;
+  --color-blue: #2563FF;
+  --color-violet: #7C3AED;
+  --color-white: #FFFFFF;
+
+  --color-bg-primary: var(--color-black);
+  --color-bg-secondary: var(--color-navy);
+  
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A8B0C0;
+  --color-text-muted: #64748B;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-hover: rgba(255, 255, 255, 0.16);
+
+  --gradient-finley: linear-gradient(135deg, #2563FF 0%, #7C3AED 100%);
+  --gradient-text: linear-gradient(135deg, #FFFFFF 0%, #A8B0C0 100%);
+
+  /* Typography */
+  --font-headings: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* Borders & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 24px 80px rgba(0, 0, 0, 0.45);
+  
+  /* Layout */
+  --container-max: 1200px;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+}

@@ -1,0 +1,379 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { Cpu, Database, LayoutGrid, Cloud, CheckCircle, ArrowRight } from '@lucide/astro';
+
+const base = import.meta.env.BASE_URL;
+
+const solutions = [
+  {
+    id: "ai-intelligent-systems",
+    title: "AI & Intelligent Systems",
+    icon: Cpu,
+    tagline: "Applied machine learning and automation built around real use cases.",
+    desc: "We design and deploy practical artificial intelligence solutions that automate complex tasks, extract insights from unstructured data, and support intelligent decision-making, avoiding tech for its own sake.",
+    features: [
+      "Custom NLP and Neural Search architectures",
+      "LLM agent workflows and local deployment optimization",
+      "Machine learning model training and inference pipelines",
+      "Computer vision and automated quality control integration",
+      "Predictive modeling and timeseries analysis"
+    ],
+    tech: ["Python", "PyTorch", "TensorFlow", "FastAPI", "Hugging Face", "Ollama"]
+  },
+  {
+    id: "data-digital-infrastructure",
+    title: "Data & Digital Infrastructure",
+    icon: Database,
+    tagline: "Solid foundations for capturing, processing, and analyzing information.",
+    desc: "We build reliable data engineering pipelines and database architectures that ensure your business information is structured, clean, accessible, and ready for analytical processing.",
+    features: [
+      "ETL/ELT pipeline design and workflow automation",
+      "Real-time event streaming and message queuing systems",
+      "Data lakehouse and modern warehouse architectures",
+      "Distributed database cluster tuning and indexing",
+      "Analytics dashboards and Business Intelligence integration"
+    ],
+    tech: ["Go", "Apache Kafka", "PostgreSQL", "ClickHouse", "dbt", "Snowflake", "Docker"]
+  },
+  {
+    id: "software-digital-products",
+    title: "Software & Digital Products",
+    icon: LayoutGrid,
+    tagline: "High-performance applications built for real users and real problems.",
+    desc: "We develop custom web applications, application interfaces (APIs), and digital products from the ground up, emphasizing responsive performance, clean code, and modular architecture.",
+    features: [
+      "Modern Single Page and Server-Side Rendered web apps",
+      "Robust RESTful, GraphQL, and gRPC API designs",
+      "Intelligent web platforms with dynamic state management",
+      "Responsive, accessible, and fast frontends",
+      "Third-party systems integration and legacy migrations"
+    ],
+    tech: ["TypeScript", "React", "Next.js", "Astro", "Node.js", "Express", "Tailwind CSS"]
+  },
+  {
+    id: "cloud-automation",
+    title: "Cloud & Automation",
+    icon: Cloud,
+    tagline: "Scalable environments and automated deployment pipelines.",
+    desc: "We establish cloud native systems, server infrastructure, and automated continuous delivery workflows, making software deployments fast, reproducible, and reliable.",
+    features: [
+      "Infrastructure as Code (IaC) setup and maintenance",
+      "Containerization and orchestration solutions",
+      "CI/CD automation pipelines for continuous shipping",
+      "Serverless architecture migration and scaling",
+      "System health monitoring, log aggregation, and alerting"
+    ],
+    tech: ["AWS", "GitHub Actions", "Docker", "Kubernetes", "Terraform", "Prometheus", "Grafana"]
+  }
+];
+---
+
+<BaseLayout
+  title="Solutions — Finley Labs"
+  description="Explore the technical capabilities and solutions built by Finley Labs, including AI, data systems, custom software, and cloud automation."
+>
+  <!-- Solutions Hero -->
+  <section class="solutions-hero section-padding">
+    <div class="container text-center">
+      <h1 class="hero-title">Practical technology.<br /><span class="gradient-text">Scalable systems.</span></h1>
+      <p class="hero-desc">
+        We combine engineering expertise with an experimental lab mindset to design, build, and continuously evolve intelligent digital products.
+      </p>
+      <div class="hero-actions">
+        <Button href={`${base}contact`} variant="primary">Start a Project <ArrowRight size={18} /></Button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions List -->
+  <section class="solutions-list-section" aria-label="Solutions capability list">
+    <div class="container">
+      <div class="solutions-stack">
+        {solutions.map((solution, index) => {
+          const Icon = solution.icon;
+          const isEven = index % 2 === 0;
+          return (
+            <div id={solution.id} class={`solution-item-card ${isEven ? '' : 'row-reverse'}`}>
+              <div class="solution-visual-box">
+                <div class="visual-glow"></div>
+                <Icon class="visual-icon" size={48} />
+                <span class="visual-number">0{index + 1}</span>
+              </div>
+              
+              <div class="solution-text-box">
+                <h2 class="solution-title">{solution.title}</h2>
+                <p class="solution-tagline">{solution.tagline}</p>
+                <p class="solution-desc">{solution.desc}</p>
+                
+                <div class="features-wrapper">
+                  <h3 class="features-title">Core capabilities:</h3>
+                  <ul class="features-list">
+                    {solution.features.map(feature => (
+                      <li>
+                        <CheckCircle size={16} class="check-icon" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div class="tech-wrapper">
+                  <h3 class="tech-title">Technology stack:</h3>
+                  <div class="tech-tags">
+                    {solution.tech.map(tag => (
+                      <span class="tech-tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+                
+                <Button href={`${base}contact?interest=${solution.id}`} variant="secondary" class="contact-cta">
+                  Discuss this Solution <ArrowRight size={16} />
+                </Button>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA section -->
+  <section class="solutions-cta section-padding">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 class="cta-title">Need a custom technical solution?</h2>
+        <p class="cta-sub">Let's discuss how we can engineer a stable, high-performance solution tailored to your problems.</p>
+        <Button href={`${base}contact`} variant="primary">Start a Project <ArrowRight size={18} /></Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .solutions-hero {
+    background-color: var(--color-black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+  }
+
+  .hero-desc {
+    max-width: 660px;
+    margin: 0 auto 36px;
+    font-size: clamp(1.1rem, 2vw, 1.25rem);
+    color: var(--color-text-secondary);
+  }
+
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Solutions stack */
+  .solutions-stack {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(60px, 10vw, 120px);
+    padding-bottom: clamp(60px, 10vw, 120px);
+  }
+
+  .solution-item-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 5vw, 60px);
+  }
+
+  @media (min-width: 992px) {
+    .solution-item-card {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+    }
+    
+    .solution-item-card.row-reverse {
+      direction: rtl;
+    }
+
+    .solution-item-card.row-reverse .solution-text-box {
+      direction: ltr; /* Reset text direction */
+    }
+  }
+
+  .solution-visual-box {
+    background: radial-gradient(circle at 30% 30%, rgba(37, 99, 255, 0.08), transparent 70%),
+                var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    color: var(--color-blue);
+    width: 100%;
+  }
+
+  .solution-item-card:nth-child(even) .solution-visual-box {
+    background: radial-gradient(circle at 30% 30%, rgba(124, 58, 237, 0.08), transparent 70%),
+                var(--color-navy);
+    color: var(--color-violet);
+  }
+
+  .visual-glow {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background-color: currentColor;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .visual-icon {
+    position: relative;
+    z-index: 2;
+  }
+
+  .visual-number {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    font-family: var(--font-headings);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.05);
+  }
+
+  .solution-text-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .solution-title {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+    margin-bottom: 8px;
+  }
+
+  .solution-tagline {
+    font-family: var(--font-headings);
+    font-size: 1.05rem;
+    color: var(--color-blue);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .solution-item-card:nth-child(even) .solution-tagline {
+    color: var(--color-violet);
+  }
+
+  .solution-desc {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+
+  .features-wrapper {
+    margin-bottom: 28px;
+    width: 100%;
+  }
+
+  .features-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-white);
+    margin-bottom: 16px;
+  }
+
+  .features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .features-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+  }
+
+  .check-icon {
+    color: var(--color-blue);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .solution-item-card:nth-child(even) .check-icon {
+    color: var(--color-violet);
+  }
+
+  .tech-wrapper {
+    margin-bottom: 32px;
+  }
+
+  .tech-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-white);
+    margin-bottom: 16px;
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-tag {
+    font-size: 0.8rem;
+    font-weight: 600;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .contact-cta {
+    margin-top: 8px;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(40px, 6vw, 80px) 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-sub {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+</style>

@@ -1,0 +1,386 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { ArrowRight, Check } from '@lucide/astro';
+
+const base = import.meta.env.BASE_URL;
+
+const technologyAreas = [
+  "Advanced Agentic Systems & local LLM orchestration",
+  "Real-time event-streaming telemetry pipelines",
+  "Wasm edge routing and low-latency microservices",
+  "Immutable transactional logging architectures",
+  "Automated multi-cloud deployment automation"
+];
+
+const beliefs = [
+  {
+    title: "Practical utility above all",
+    desc: "We prioritize solving real-world, user-facing problems over adopting trending buzzwords or engineering vanity projects."
+  },
+  {
+    title: "High-performance standards",
+    desc: "We write clean, typed code and maintain minimal system dependencies to ensure software runs fast, stays secure, and remains maintainable."
+  },
+  {
+    title: "Continuous cycle optimization",
+    desc: "We treat every software product as a living digital system that should actively gather telemetry data, learn, and iterate."
+  }
+];
+---
+
+<BaseLayout
+  title="About Us — Finley Labs"
+  description="Learn about Finley Labs, our operating philosophy of Innovate, Build, and Evolve, and our approach to technology."
+>
+  <!-- About Hero -->
+  <section class="about-hero section-padding">
+    <div class="container text-center">
+      <h1 class="hero-title">Building the future,<br /><span class="gradient-text">one useful system at a time.</span></h1>
+      <p class="hero-desc">
+        Finley Labs is an independent technology and innovation studio. We build intelligent software, data infrastructure, and custom systems designed to turn complex business needs into practical operations.
+      </p>
+    </div>
+  </section>
+
+  <!-- Who We Are -->
+  <section class="who-we-are section-padding" aria-label="Who we are">
+    <div class="container">
+      <div class="about-grid">
+        <div class="grid-visual">
+          <div class="glow-sphere"></div>
+          <div class="fl-geometry">
+            <span class="geo-line"></span>
+            <span class="geo-line-vertical"></span>
+          </div>
+        </div>
+        
+        <div class="grid-content">
+          <h2 class="about-section-title">Who we are</h2>
+          <p class="about-text">
+            We are not a traditional IT consultancy. Finley Labs operates at the intersection of a research laboratory and a software engineering house. We believe that technology should be a multiplier, not an administrative burden.
+          </p>
+          <p class="about-text">
+            Our team focuses on architectural integrity. We work with clients to audit their existing systems, identify performance bottlenecks, and design custom software solutions that operate reliably under high load.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Believe -->
+  <section class="what-we-believe section-padding">
+    <div class="container">
+      <h2 class="section-title text-center">What we believe</h2>
+      <p class="section-subtitle text-center max-w-500">Core principles guiding our software engineering and research efforts.</p>
+      
+      <div class="beliefs-grid">
+        {beliefs.map(belief => (
+          <div class="belief-card">
+            <h3 class="belief-card-title">{belief.title}</h3>
+            <p class="belief-card-desc">{belief.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Tech Areas -->
+  <section class="tech-areas section-padding" aria-label="Technology focus areas">
+    <div class="container">
+      <div class="about-grid">
+        <div class="grid-content">
+          <h2 class="about-section-title">Our technical focus</h2>
+          <p class="about-text">
+            We actively track emerging developments in computing and data engineering. Rather than wait for vendor packages, we write core drivers, test new frameworks in the lab, and compile custom components when performance dictates it.
+          </p>
+          
+          <ul class="tech-areas-list">
+            {technologyAreas.map(area => (
+              <li>
+                <div class="bullet-check">
+                  <Check size={14} />
+                </div>
+                <span>{area}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div class="grid-visual text-right-visual">
+          <div class="tech-specs-box">
+            <div class="spec-line"><span>STABILITY TARGET</span> <span>99.99%</span></div>
+            <div class="spec-line"><span>COMPLIANCE</span> <span>WCAG 2.2 AA</span></div>
+            <div class="spec-line"><span>DATA FORMATS</span> <span>Parquet / JSONB / CSV</span></div>
+            <div class="spec-line"><span>PIPELINES</span> <span>Kafka / gRPC / REST</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Future Vision -->
+  <section class="future-vision section-padding">
+    <div class="container text-center">
+      <div class="vision-box">
+        <h2 class="vision-title">Future Vision</h2>
+        <p class="vision-text">
+          As machine intelligence and cloud orchestration systems become increasingly commoditized, the value of robust, clean software architectures rises. We are building Finley Labs to be the engineering partner that organizations trust when they need to transition experimental AI designs into resilient production software.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="about-cta section-padding">
+    <div class="container">
+      <div class="cta-banner">
+        <h2 class="cta-title">Ready to build something useful?</h2>
+        <p class="cta-sub">Let's discuss how our capabilities can help solve your organizational challenges.</p>
+        <Button href={`${base}contact`} variant="primary">Start a Project <ArrowRight size={18} /></Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about-hero {
+    background-color: var(--color-black);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+  }
+
+  .hero-desc {
+    max-width: 720px;
+    margin: 0 auto;
+    font-size: clamp(1.15rem, 2vw, 1.3rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Grid Layouts */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .about-grid {
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+    }
+  }
+
+  .grid-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .about-section-title {
+    margin-bottom: 20px;
+  }
+
+  .about-text {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .about-text:last-of-type {
+    margin-bottom: 0;
+  }
+
+  /* Visual Elements */
+  .grid-visual {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .glow-sphere {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+  }
+
+  .fl-geometry {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--color-blue);
+    border-radius: var(--radius-sm);
+  }
+
+  .geo-line {
+    position: absolute;
+    top: 50%;
+    left: -10px;
+    right: -10px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .geo-line-vertical {
+    position: absolute;
+    left: 50%;
+    top: -10px;
+    bottom: -10px;
+    width: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Beliefs section */
+  .max-w-500 {
+    max-width: 540px;
+    margin: 0 auto 56px;
+  }
+
+  .beliefs-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .beliefs-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .belief-card {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+  }
+
+  .belief-card-title {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: var(--color-blue);
+  }
+
+  .belief-card-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+    line-height: 1.6;
+  }
+
+  /* Tech areas list */
+  .tech-areas-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  .tech-areas-list li {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+  }
+
+  .bullet-check {
+    width: 28px;
+    height: 28px;
+    background-color: rgba(37, 99, 255, 0.08);
+    color: var(--color-blue);
+    border: 1px solid rgba(37, 99, 255, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Tech Specs Box */
+  .tech-specs-box {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .spec-line {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .spec-line span:first-child {
+    color: var(--color-text-secondary);
+  }
+
+  .spec-line span:last-child {
+    color: var(--color-white);
+  }
+
+  /* Vision Box */
+  .vision-box {
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(32px, 6vw, 60px);
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .vision-title {
+    margin-bottom: 16px;
+  }
+
+  .vision-text {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  /* CTA Banner */
+  .cta-banner {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(40px, 6vw, 80px) 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-sub {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    max-width: 520px;
+    margin-bottom: 32px;
+  }
+</style>

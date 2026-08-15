@@ -1,0 +1,82 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary';
+  href?: string;
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  variant = 'primary',
+  href,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const Element = href ? 'a' : 'button';
+---
+
+<Element
+  href={href}
+  class={`btn btn-${variant} ${className}`}
+  {...rest}
+>
+  <slot />
+</Element>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: var(--radius-sm);
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    text-decoration: none;
+    min-height: 44px; /* Touch target accessibility */
+    white-space: nowrap;
+    border: none;
+  }
+
+  .btn-primary {
+    background-color: var(--color-blue);
+    color: var(--color-white);
+  }
+
+  .btn-primary:hover {
+    background: var(--gradient-finley);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(1px);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--color-white);
+    border: 1px solid var(--color-border);
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.02);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary:active {
+    transform: translateY(1px);
+  }
+
+  /* Accessibility focus visible overrides if needed */
+  .btn:focus-visible {
+    outline: 2px solid var(--color-blue);
+    outline-offset: 4px;
+  }
+</style>

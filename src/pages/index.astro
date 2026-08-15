@@ -1,0 +1,1084 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { ArrowRight, Cpu, Database, LayoutGrid, Cloud, Flame, Compass, RefreshCw, BarChart2 } from '@lucide/astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects
+  .filter(project => project.data.featured)
+  .slice(0, 2)
+  .map(project => ({
+    title: project.data.title,
+    category: project.data.categoryLabel,
+    description: project.data.description,
+    tech: project.data.technologies,
+    status: project.data.status,
+    href: `${base}projects`
+  }));
+
+const allLab = await getCollection('lab');
+const labHighlights = allLab
+  .slice(0, 2)
+  .map(item => ({
+    id: item.data.id,
+    category: item.data.category,
+    title: item.data.title,
+    desc: item.data.description,
+    href: `${base}lab`
+  }));
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="hero-section" aria-label="Hero">
+    <canvas id="hero-canvas" class="hero-canvas"></canvas>
+    
+    <div class="container hero-container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>Finley Labs &middot; Innovation Studio</span>
+        </div>
+        
+        <h1 class="hero-title">
+          Technology for <br />
+          <span class="gradient-text">real-world impact.</span>
+        </h1>
+        
+        <p class="hero-subtitle">
+          We build intelligent software, data, and AI solutions that turn complex challenges into practical, scalable opportunities.
+        </p>
+        
+        <div class="hero-actions">
+          <Button href={`${base}solutions`} variant="primary">
+            Explore Solutions <ArrowRight size={18} />
+          </Button>
+          <Button href={`${base}contact`} variant="secondary">
+            Start a Project
+          </Button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Positioning Strip -->
+  <section class="positioning-strip" aria-label="Positioning">
+    <div class="container">
+      <div class="strip-grid">
+        <div class="strip-tags">
+          <span>AI</span>
+          <span class="bullet">&middot;</span>
+          <span>DATA</span>
+          <span class="bullet">&middot;</span>
+          <span>SOFTWARE</span>
+          <span class="bullet">&middot;</span>
+          <span>CLOUD</span>
+          <span class="bullet">&middot;</span>
+          <span>DIGITAL PRODUCTS</span>
+        </div>
+        <p class="strip-statement">
+          We explore emerging technologies and turn promising ideas into useful products, platforms, and digital solutions.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Build Section -->
+  <section class="build-section section-padding" id="solutions">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">We turn technology into useful outcomes.</h2>
+        <p class="section-subtitle">
+          From intelligent systems and data infrastructure to custom digital products and emerging tech research.
+        </p>
+      </div>
+
+      <div class="build-grid">
+        <!-- Card 1: AI -->
+        <div class="build-card">
+          <div class="card-icon-wrapper">
+            <Cpu class="card-icon" size={24} />
+          </div>
+          <h3 class="card-title">AI & Intelligent Systems</h3>
+          <p class="card-desc">
+            Applied AI, machine learning, intelligent applications, and automation designed around real-world use cases.
+          </p>
+          <a href={`${base}solutions`} class="card-link">
+            Explore AI <ArrowRight size={16} />
+          </a>
+        </div>
+
+        <!-- Card 2: Data -->
+        <div class="build-card">
+          <div class="card-icon-wrapper">
+            <Database class="card-icon" size={24} />
+          </div>
+          <h3 class="card-title">Data & Digital Infrastructure</h3>
+          <p class="card-desc">
+            Data engineering, analytics, platforms, and cloud infrastructure that turn information into usable intelligence.
+          </p>
+          <a href={`${base}solutions`} class="card-link">
+            Explore Data <ArrowRight size={16} />
+          </a>
+        </div>
+
+        <!-- Card 3: Software -->
+        <div class="build-card">
+          <div class="card-icon-wrapper">
+            <LayoutGrid class="card-icon" size={24} />
+          </div>
+          <h3 class="card-title">Software & Digital Products</h3>
+          <p class="card-desc">
+            Web applications, platforms, APIs, and custom software designed around real users and real problems.
+          </p>
+          <a href={`${base}solutions`} class="card-link">
+            Explore Software <ArrowRight size={16} />
+          </a>
+        </div>
+
+        <!-- Card 4: Cloud -->
+        <div class="build-card">
+          <div class="card-icon-wrapper">
+            <Cloud class="card-icon" size={24} />
+          </div>
+          <h3 class="card-title">Cloud & Automation</h3>
+          <p class="card-desc">
+            Scalable infrastructure, workflows, and devops automation that make digital operations faster and more reliable.
+          </p>
+          <a href={`${base}solutions`} class="card-link">
+            Explore Cloud <ArrowRight size={16} />
+          </a>
+        </div>
+
+        <!-- Card 5: Research / Lab -->
+        <div class="build-card card-highlight">
+          <div class="card-icon-wrapper">
+            <Flame class="card-icon text-violet" size={24} />
+          </div>
+          <h3 class="card-title">Research & Experimentation</h3>
+          <p class="card-desc">
+            Emerging technology research, prototypes, and experiments exploring what could be built next.
+          </p>
+          <a href={`${base}lab`} class="card-link">
+            Explore the Lab <ArrowRight size={16} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Finley Approach -->
+  <section class="approach-section section-padding">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Innovate. Build. Evolve.</h2>
+        <p class="section-subtitle">Our operating philosophy for building digital systems that last.</p>
+      </div>
+
+      <div class="approach-grid">
+        <div class="approach-item">
+          <div class="approach-num-wrapper">
+            <span class="approach-number">01</span>
+            <Compass class="approach-icon" size={32} />
+          </div>
+          <h3 class="approach-title">INNOVATE</h3>
+          <p class="approach-desc">
+            Explore emerging technologies, identify opportunities, and test ideas before investing heavily in them.
+          </p>
+        </div>
+
+        <div class="approach-item">
+          <div class="approach-num-wrapper">
+            <span class="approach-number">02</span>
+            <Cpu class="approach-icon" size={32} />
+          </div>
+          <h3 class="approach-title">BUILD</h3>
+          <p class="approach-desc">
+            Turn validated ideas into functional software, intelligent systems, and scalable digital products.
+          </p>
+        </div>
+
+        <div class="approach-item">
+          <div class="approach-num-wrapper">
+            <span class="approach-number">03</span>
+            <RefreshCw class="approach-icon" size={32} />
+          </div>
+          <h3 class="approach-title">EVOLVE</h3>
+          <p class="approach-desc">
+            Measure performance, capture learnings, and continuously improve what works.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Projects -->
+  <section class="projects-section section-padding">
+    <div class="container">
+      <div class="section-header-row">
+        <div class="section-header-left">
+          <h2 class="section-title">Built for the real world.</h2>
+          <p class="section-subtitle">A selection of products, systems, and tools built by Finley Labs.</p>
+        </div>
+        <Button href={`${base}projects`} variant="secondary">
+          All Projects
+        </Button>
+      </div>
+
+      <div class="projects-grid">
+        {featuredProjects.map(project => (
+          <article class="project-card">
+            <div class="project-header">
+              <span class="project-category">{project.category}</span>
+              <span class="project-status">{project.status}</span>
+            </div>
+            <h3 class="project-title">{project.title}</h3>
+            <p class="project-desc">{project.description}</p>
+            <div class="project-tech">
+              {project.tech.map(tag => (
+                <span class="tech-tag">{tag}</span>
+              ))}
+            </div>
+            <a href={project.href} class="project-link">
+              View Project <ArrowRight size={16} />
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- The Lab Highlights -->
+  <section class="lab-section section-padding">
+    <div class="container">
+      <div class="section-header-row">
+        <div class="section-header-left">
+          <h2 class="section-title">The Lab</h2>
+          <p class="section-subtitle">Ideas we're exploring. Technologies we're testing. Problems we're solving.</p>
+        </div>
+        <Button href={`${base}lab`} variant="secondary">
+          Enter the Lab
+        </Button>
+      </div>
+
+      <div class="lab-grid">
+        {labHighlights.map(item => (
+          <div class="lab-card">
+            <div class="lab-card-header">
+              <span class="lab-id">{item.id}</span>
+              <span class="lab-category">{item.category}</span>
+            </div>
+            <h3 class="lab-title">{item.title}</h3>
+            <p class="lab-desc">{item.desc}</p>
+            <a href={item.href} class="lab-link">
+              Explore <ArrowRight size={16} />
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Finley Section -->
+  <section class="why-section section-padding">
+    <div class="container">
+      <div class="why-grid">
+        <div class="why-intro">
+          <h2 class="section-title">Technology should be useful.</h2>
+          <p class="why-desc">
+            We focus on practical technology: systems that solve meaningful problems, products that people can actually use, and experiments that lead to better decisions.
+          </p>
+        </div>
+        
+        <div class="why-principles">
+          <div class="principle-item">
+            <div class="principle-icon-wrapper">
+              <Compass size={20} />
+            </div>
+            <div>
+              <h3 class="principle-title">Practical</h3>
+              <p class="principle-desc">Build for real problems rather than technology for its own sake.</p>
+            </div>
+          </div>
+
+          <div class="principle-item">
+            <div class="principle-icon-wrapper">
+              <BarChart2 size={20} />
+            </div>
+            <div>
+              <h3 class="principle-title">Intelligent</h3>
+              <p class="principle-desc">Use data and emerging technologies where they create genuine, measurable value.</p>
+            </div>
+          </div>
+
+          <div class="principle-item">
+            <div class="principle-icon-wrapper">
+              <RefreshCw size={20} />
+            </div>
+            <div>
+              <h3 class="principle-title">Evolving</h3>
+              <p class="principle-desc">Treat every product as a living system that can learn and improve over time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="cta-section section-padding">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-glow"></div>
+        <h2 class="cta-title">Have a problem worth solving?</h2>
+        <p class="cta-subtitle">Tell us what you're working on. Let's explore what technology can make possible.</p>
+        <Button href={`${base}contact`} variant="primary" class="cta-btn">
+          Start a Project <ArrowRight size={18} />
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero styles */
+  .hero-section {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--color-black);
+    overflow: hidden;
+    padding-top: 100px;
+    z-index: 1;
+  }
+
+  .hero-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.85;
+  }
+
+  .hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: linear-gradient(to top, var(--color-black), transparent);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .hero-container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-content {
+    max-width: 720px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: rgba(37, 99, 255, 0.08);
+    border: 1px solid rgba(37, 99, 255, 0.15);
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-blue);
+    margin-bottom: 28px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-blue);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--color-blue);
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+  }
+
+  .gradient-text {
+    background: var(--gradient-finley);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.1rem, 2vw, 1.3rem);
+    color: var(--color-text-secondary);
+    margin-bottom: 40px;
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Positioning Strip */
+  .positioning-strip {
+    background-color: var(--color-navy);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    padding: 32px 0;
+    position: relative;
+    z-index: 5;
+  }
+
+  .strip-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  @media (min-width: 992px) {
+    .strip-grid {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      gap: 48px;
+    }
+  }
+
+  .strip-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-headings);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    color: var(--color-white);
+  }
+
+  .bullet {
+    color: var(--color-blue);
+  }
+
+  .strip-statement {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+    max-width: 600px;
+  }
+
+  /* Section header utils */
+  .section-header {
+    max-width: 680px;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  .section-header-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: clamp(40px, 6vw, 64px);
+  }
+
+  @media (min-width: 768px) {
+    .section-header-row {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .section-header-left {
+    max-width: 680px;
+  }
+
+  .section-title {
+    margin-bottom: 16px;
+  }
+
+  .section-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  /* Build grid styles */
+  .build-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .build-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .build-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .build-card {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  }
+
+  .build-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(37, 99, 255, 0.3);
+    box-shadow: 0 12px 30px rgba(37, 99, 255, 0.05);
+  }
+
+  .card-icon-wrapper {
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: var(--color-blue);
+  }
+
+  .card-highlight .card-icon-wrapper {
+    background-color: rgba(124, 58, 237, 0.08);
+    border-color: rgba(124, 58, 237, 0.15);
+  }
+
+  .text-violet {
+    color: var(--color-violet) !important;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+
+  .card-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-blue);
+  }
+
+  .card-highlight .card-link {
+    color: var(--color-violet);
+  }
+
+  .card-link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .card-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Highlight card overrides */
+  @media (min-width: 1024px) {
+    .card-highlight {
+      grid-column: span 2;
+    }
+  }
+
+  /* Approach styles */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .approach-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .approach-item {
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .approach-num-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .approach-number {
+    font-family: var(--font-headings);
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.05);
+    background: var(--gradient-finley);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+  }
+
+  .approach-icon {
+    color: var(--color-blue);
+    opacity: 0.7;
+  }
+
+  .approach-item:nth-child(2) .approach-icon {
+    color: var(--color-violet);
+  }
+
+  .approach-item:nth-child(3) .approach-icon {
+    color: var(--color-white);
+  }
+
+  .approach-title {
+    font-size: 1.3rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  .approach-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  /* Project card styles */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .project-card {
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+  }
+
+  .project-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .project-category {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-blue);
+  }
+
+  .project-status {
+    font-size: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: 100px;
+    color: var(--color-text-secondary);
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+  }
+
+  .project-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .tech-tag {
+    font-size: 0.8rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--color-white);
+    font-size: 0.9rem;
+  }
+
+  .project-link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .project-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Lab card styles */
+  .lab-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  @media (min-width: 768px) {
+    .lab-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .lab-card {
+    background-color: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    transition: border-color var(--transition-normal);
+  }
+
+  .lab-card:hover {
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+
+  .lab-card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .lab-id {
+    color: var(--color-violet);
+    font-family: var(--font-headings);
+  }
+
+  .lab-category {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+
+  .lab-title {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .lab-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 24px;
+    flex-grow: 1;
+  }
+
+  .lab-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .lab-link:hover {
+    color: var(--color-white);
+  }
+
+  .lab-link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .lab-link:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* Why Finley Section */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .why-grid {
+      grid-template-columns: 1.2fr 1fr;
+      gap: 80px;
+    }
+  }
+
+  .why-intro {
+    max-width: 580px;
+  }
+
+  .why-desc {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+
+  .why-principles {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .principle-item {
+    display: flex;
+    gap: 20px;
+    background-color: var(--color-navy);
+    border: 1px solid var(--color-border);
+    padding: 24px;
+    border-radius: var(--radius-md);
+  }
+
+  .principle-icon-wrapper {
+    background-color: rgba(37, 99, 255, 0.08);
+    border-radius: var(--radius-sm);
+    color: var(--color-blue);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .principle-item:nth-child(2) .principle-icon-wrapper {
+    background-color: rgba(124, 58, 237, 0.08);
+    color: var(--color-violet);
+  }
+
+  .principle-item:nth-child(3) .principle-icon-wrapper {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: var(--color-white);
+  }
+
+  .principle-title {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .principle-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+  }
+
+  /* Closing CTA Section */
+  .cta-section {
+    padding-bottom: clamp(80px, 12vw, 150px);
+  }
+
+  .cta-card {
+    background: radial-gradient(circle at top right, rgba(37, 99, 255, 0.15), transparent 45%),
+                radial-gradient(circle at bottom left, rgba(124, 58, 237, 0.15), transparent 40%),
+                var(--color-navy);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: clamp(48px, 8vw, 80px) clamp(24px, 4vw, 48px);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-title {
+    margin-bottom: 16px;
+    max-width: 600px;
+  }
+
+  .cta-subtitle {
+    font-size: 1.15rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+
+  .cta-btn {
+    position: relative;
+    z-index: 5;
+  }
+</style>
+
+<script>
+  // Technical orbital network animation
+  const initCanvas = () => {
+    const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = canvas.width = canvas.offsetWidth;
+    let height = canvas.height = canvas.offsetHeight;
+    
+    let animationId: number;
+
+    const handleResize = () => {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      radius: number;
+      color: string;
+    }> = [];
+    
+    const particleCount = 45;
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25,
+        radius: Math.random() * 2 + 1.2,
+        color: Math.random() > 0.55 ? '#2563FF' : '#7C3AED'
+      });
+    }
+
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    const animate = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw connections
+      for (let i = 0; i < particleCount; i++) {
+        for (let j = i + 1; j < particleCount; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < 125) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            // Draw fade gradient lines based on distance
+            const alpha = 0.08 * (1 - dist / 125);
+            ctx.strokeStyle = `rgba(37, 99, 255, ${alpha})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Move & Draw particles
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 0.6;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+
+        if (!reducedMotionQuery.matches) {
+          p.x += p.vx;
+          p.y += p.vy;
+
+          // Wrap edges instead of bounce for softer transition
+          if (p.x < 0) p.x = width;
+          if (p.x > width) p.x = 0;
+          if (p.y < 0) p.y = height;
+          if (p.y > height) p.y = 0;
+        }
+      });
+
+      if (!reducedMotionQuery.matches) {
+        animationId = requestAnimationFrame(animate);
+      }
+    };
+
+    if (!reducedMotionQuery.matches) {
+      animate();
+    }
+
+    reducedMotionQuery.addEventListener('change', (e) => {
+      if (e.matches) {
+        cancelAnimationFrame(animationId);
+        ctx.clearRect(0, 0, width, height);
+      } else {
+        animate();
+      }
+    });
+  };
+
+  // Run on page load
+  initCanvas();
+</script>

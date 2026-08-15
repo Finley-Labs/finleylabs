@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import { ArrowRight, AlertTriangle } from '@lucide/astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout
+  title="Page Not Found (404) — Finley Labs"
+  description="The requested page could not be found. Lost in the system."
+>
+  <section class="error-section">
+    <div class="error-container text-center">
+      <div class="error-icon-box">
+        <AlertTriangle size={36} />
+      </div>
+      
+      <span class="error-code">ERROR 404</span>
+      <h1 class="error-title">Lost in the system.</h1>
+      
+      <p class="error-subtitle">
+        The page you're looking for doesn't exist or has been moved to another location.
+      </p>
+
+      <div class="matrix-grid">
+        <span class="grid-pixel"></span>
+        <span class="grid-pixel"></span>
+        <span class="grid-pixel"></span>
+        <span class="grid-pixel"></span>
+      </div>
+      
+      <Button href={base} variant="primary">
+        Return Home <ArrowRight size={18} />
+      </Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .error-section {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-black);
+    position: relative;
+    padding: 100px 24px;
+  }
+
+  .error-container {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .error-icon-box {
+    color: var(--color-violet);
+    background-color: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: var(--radius-sm);
+    width: 68px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+
+  .error-code {
+    font-family: var(--font-headings);
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--color-blue);
+    margin-bottom: 12px;
+  }
+
+  .error-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 16px;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .error-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  /* FL inspired matrix/computational graphic */
+  .matrix-grid {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .grid-pixel {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+  }
+
+  .grid-pixel:nth-child(2) {
+    background-color: var(--color-blue);
+    box-shadow: 0 0 10px var(--color-blue);
+  }
+
+  .grid-pixel:nth-child(3) {
+    background-color: var(--color-violet);
+    box-shadow: 0 0 10px var(--color-violet);
+  }
+</style>
