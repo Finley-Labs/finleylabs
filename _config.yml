@@ -1,0 +1,18 @@
+# Jekyll Configuration
+# Exclude folders containing non-Jekyll files (like Astro components) to prevent build crashes.
+exclude:
+  - src
+  - node_modules
+  - .github
+  - .astro
+  - dist
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - astro.config.mjs
+  - README.md
+  - AGENTS.md
+  - CLAUDE.md
+  - brand
+  - docs
+  - public
