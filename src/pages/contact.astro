@@ -5,8 +5,8 @@ import { Mail } from '@lucide/astro';
 
 const base = import.meta.env.BASE_URL;
 
-// Retrieve configurable public form submission action
-const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io/f/placeholder";
+// Configurable form endpoint; defaults to your verified Formspree form
+const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io/f/xoevqywa";
 ---
 
 <BaseLayout
@@ -24,19 +24,19 @@ const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io
           </p>
 
           <div class="contact-methods">
-            <a href="mailto:hello@finleylabs.com" class="method-card">
+            <a href="mailto:markfinley.oseihyiaman@gmail.com" class="method-card">
               <div class="method-icon-wrapper">
                 <Mail size={20} />
               </div>
               <div class="method-details">
                 <span class="method-label">Email Us</span>
-                <span class="method-value">hello@finleylabs.com</span>
+                <span class="method-value">markfinley.oseihyiaman@gmail.com</span>
               </div>
             </a>
 
             <a href="https://www.linkedin.com/company/finley-labs" target="_blank" rel="noopener noreferrer" class="method-card">
               <div class="method-icon-wrapper">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" r="2"></circle></svg>
               </div>
               <div class="method-details">
                 <span class="method-label">LinkedIn</span>
@@ -58,42 +58,80 @@ const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io
 
         <!-- Contact Form Card -->
         <div class="contact-form-card">
-          <h2 class="form-title">Send a message</h2>
-          <p class="form-subtitle">Fields marked with * are required.</p>
-          
-          <form action={formAction} method="POST" class="contact-form">
-            <div class="form-group">
-              <label for="name" class="form-label">Full Name *</label>
-              <input type="text" id="name" name="name" required class="form-input" placeholder="Alex Morgan" />
+          <!-- Main Form Container -->
+          <div id="form-container">
+            <h2 class="form-title">Send a message</h2>
+            <p class="form-subtitle">Fields marked with * are required.</p>
+            
+            <form id="contact-form" action={formAction} method="POST" class="contact-form">
+              <!-- Formspree Subject & Honeypot -->
+              <input type="hidden" name="_subject" value="New Inquiry from Finley Labs Website" />
+              <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="form-group">
+                <label for="name" class="form-label">Full Name *</label>
+                <input type="text" id="name" name="name" required class="form-input" placeholder="Alex Morgan" />
+              </div>
+
+              <div class="form-group">
+                <label for="email" class="form-label">Email Address *</label>
+                <input type="email" id="email" name="email" required class="form-input" placeholder="alex@company.com" />
+              </div>
+
+              <div class="form-group">
+                <label for="interest" class="form-label">Area of Interest</label>
+                <select id="interest" name="interest" class="form-select">
+                  <option value="general">General Inquiry</option>
+                  <option value="ai-intelligent-systems">AI & Intelligent Systems</option>
+                  <option value="data-digital-infrastructure">Data & Digital Infrastructure</option>
+                  <option value="software-digital-products">Software & Digital Products</option>
+                  <option value="cloud-automation">Cloud & Automation</option>
+                  <option value="lab">Research & Lab Experiments</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="message" class="form-label">Project Details *</label>
+                <textarea id="message" name="message" required class="form-textarea" rows="5" placeholder="Briefly describe the challenge or system you want to build..."></textarea>
+              </div>
+
+              <!-- Error Alert Banner -->
+              <div id="form-error" class="form-error-banner" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="error-icon"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span id="form-error-text">Failed to send message. Please try again or email us directly.</span>
+              </div>
+
+              <Button type="submit" id="submit-btn" variant="primary" class="submit-button">
+                <span id="btn-text">Submit Message</span>
+                <span id="btn-spinner" class="spinner-wrapper" style="display: none;">
+                  <svg class="spinner-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+                  </svg>
+                  <span>Sending message...</span>
+                </span>
+              </Button>
+            </form>
+          </div>
+
+          <!-- Sleek Success State -->
+          <div id="success-container" class="success-state" style="display: none;">
+            <div class="success-icon-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
             </div>
-
-            <div class="form-group">
-              <label for="email" class="form-label">Email Address *</label>
-              <input type="email" id="email" name="email" required class="form-input" placeholder="alex@company.com" />
+            <h3 class="success-title">Message Sent Successfully!</h3>
+            <p class="success-desc">
+              Thank you for reaching out. We have received your inquiry and will be in touch with you shortly.
+            </p>
+            <div class="success-action">
+              <Button type="button" id="reset-btn" variant="secondary" class="reset-button">
+                Send Another Message
+              </Button>
             </div>
-
-            <div class="form-group">
-              <label for="interest" class="form-label">Area of Interest</label>
-              <select id="interest" name="interest" class="form-select">
-                <option value="general">General Inquiry</option>
-                <option value="ai-intelligent-systems">AI & Intelligent Systems</option>
-                <option value="data-digital-infrastructure">Data & Digital Infrastructure</option>
-                <option value="software-digital-products">Software & Digital Products</option>
-                <option value="cloud-automation">Cloud & Automation</option>
-                <option value="lab">Research & Lab Experiments</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="message" class="form-label">Project Details *</label>
-              <textarea id="message" name="message" required class="form-textarea" rows="5" placeholder="Briefly describe the challenge or system you want to build..."></textarea>
-            </div>
-
-            <!-- Anti-spam honeypot input for static forms -->
-            <input type="text" name="_gotcha" style="display:none" />
-
-            <Button type="submit" variant="primary" class="submit-button">Submit Message</Button>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -206,6 +244,8 @@ const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: clamp(24px, 5vw, 48px);
+    position: relative;
+    overflow: hidden;
   }
 
   .form-title {
@@ -275,6 +315,103 @@ const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io
     margin-top: 12px;
     align-self: flex-start;
   }
+
+  .spinner-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .spinner-svg {
+    width: 18px;
+    height: 18px;
+    animation: spin 0.8s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Form Error Banner */
+  .form-error-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  .error-icon {
+    flex-shrink: 0;
+    color: #ef4444;
+  }
+
+  /* Success State */
+  .success-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 32px 16px 20px;
+    animation: fadeInScale 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fadeInScale {
+    from {
+      opacity: 0;
+      transform: scale(0.96) translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  .success-icon-badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: radial-gradient(circle at center, rgba(37, 99, 255, 0.25), rgba(124, 58, 237, 0.1));
+    border: 1px solid rgba(59, 130, 246, 0.4);
+    color: var(--color-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    box-shadow: 0 0 30px rgba(37, 99, 255, 0.25);
+  }
+
+  .success-title {
+    font-size: 1.6rem;
+    font-family: var(--font-headings);
+    color: var(--color-white);
+    margin-bottom: 12px;
+  }
+
+  .success-desc {
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    max-width: 440px;
+    margin-bottom: 32px;
+  }
+
+  .success-action {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .reset-button {
+    font-size: 0.9rem;
+  }
 </style>
 
 <script>
@@ -282,10 +419,9 @@ const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io
   const fillInterestField = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const interest = urlParams.get('interest');
-    const select = document.getElementById('interest') as HTMLSelectElement;
+    const select = document.getElementById('interest') as HTMLSelectElement | null;
     
     if (interest && select) {
-      // Find matching option value
       for (let i = 0; i < select.options.length; i++) {
         if (select.options[i].value === interest) {
           select.selectedIndex = i;
@@ -295,6 +431,78 @@ const formAction = import.meta.env.PUBLIC_FORM_ENDPOINT || "https://formspree.io
     }
   };
 
+  // Form submission handler with AJAX fetch and feedback state
+  const setupContactForm = () => {
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const formContainer = document.getElementById('form-container') as HTMLElement | null;
+    const successContainer = document.getElementById('success-container') as HTMLElement | null;
+    const errorBanner = document.getElementById('form-error') as HTMLElement | null;
+    const errorText = document.getElementById('form-error-text') as HTMLElement | null;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const btnText = document.getElementById('btn-text') as HTMLElement | null;
+    const btnSpinner = document.getElementById('btn-spinner') as HTMLElement | null;
+    const resetBtn = document.getElementById('reset-btn') as HTMLButtonElement | null;
+
+    if (!form || !formContainer || !successContainer) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (errorBanner) {
+        errorBanner.style.display = 'none';
+      }
+
+      // Set loading state
+      if (submitBtn) submitBtn.disabled = true;
+      if (btnText) btnText.style.display = 'none';
+      if (btnSpinner) btnSpinner.style.display = 'inline-flex';
+
+      try {
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          // Hide form and show sleek success state
+          formContainer.style.display = 'none';
+          successContainer.style.display = 'flex';
+          form.reset();
+        } else {
+          const data = await response.json().catch(() => null);
+          const message = data && data.errors && data.errors.length
+            ? data.errors.map((err: any) => err.message).join(', ')
+            : 'Oops! There was a problem submitting your message. Please try again.';
+          
+          if (errorText) errorText.textContent = message;
+          if (errorBanner) errorBanner.style.display = 'flex';
+        }
+      } catch (err) {
+        if (errorText) {
+          errorText.textContent = 'Network error. Please check your connection or contact us directly.';
+        }
+        if (errorBanner) errorBanner.style.display = 'flex';
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (btnText) btnText.style.display = 'inline';
+        if (btnSpinner) btnSpinner.style.display = 'none';
+      }
+    });
+
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        successContainer.style.display = 'none';
+        formContainer.style.display = 'block';
+        if (errorBanner) errorBanner.style.display = 'none';
+      });
+    }
+  };
+
   // Run on load
   fillInterestField();
+  setupContactForm();
 </script>
